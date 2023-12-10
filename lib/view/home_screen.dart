@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             Center(
@@ -176,14 +176,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Padding(
                   padding: EdgeInsets.all(0.8.h),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      policyTypeDetails.imageUrl != null
-                          ? Center(
-                              child: Image.network(
-                              policyTypeDetails.imageUrl!,
-                              height: 8.h,
-                            ))
-                          : Container(),
+                      // policyTypeDetails.imageUrl != null
+                      //     ? Center(
+                      //         child: Image.network(
+                      //         policyTypeDetails.imageUrl!,
+                      //         height: 8.h,
+                      //       ))
+                      //     : Container(),
                       SizedBox(height: 1.h),
                       Container(
                         decoration: BoxDecoration(
@@ -201,25 +202,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "Policy name: ${policyTypeDetails.name!} (${policyTypeDetails.hindiName})",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.5.sp),
+                                    fontSize: 16.sp),
                               ),
                               Text(
                                 "Created at: ${dateFormatForEpoch.format(DateTime.fromMicrosecondsSinceEpoch(policyTypeDetails.createdAt!))}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.5.sp),
+                                    fontSize: 16.sp),
                               ),
                               Text(
                                 "Updated at: ${dateFormatForEpoch.format(DateTime.fromMicrosecondsSinceEpoch(policyTypeDetails.updatedAt!))}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.5.sp),
+                                    fontSize: 16.sp),
                               ),
                               Text(
                                 "Is active: ${policyTypeDetails.isActive! == true ? "Yes" : "No"}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.5.sp),
+                                    fontSize: 16.sp),
                               ),
                             ],
                           ),
@@ -380,11 +381,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.all(0.w),
                 icon: const Icon(Icons.refresh),
                 onPressed: () {
-                  homeScreenController
-                      .chosenStatusForFilter.value = "";
+                  homeScreenController.chosenStatusForFilter.value = "";
                   getAPI(
-                      status: homeScreenController
-                          .chosenStatusForFilter.value);
+                      status: homeScreenController.chosenStatusForFilter.value);
                 },
               ),
             ],
