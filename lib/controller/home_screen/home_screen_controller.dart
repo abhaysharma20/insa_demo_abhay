@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insa_demo_abhay/helpers/textfile.dart';
-import 'package:insa_demo_abhay/helpers/utility.dart';
 import 'package:insa_demo_abhay/model/insurance_model.dart';
 import 'package:insa_demo_abhay/services/api_calls.dart';
 import 'package:insa_demo_abhay/services/api_endpoints.dart';
@@ -14,14 +13,12 @@ class HomeScreenController extends GetxController {
   RxInt totalAstrologersCount = 0.obs;
   InsuranceDetailsModel insuranceDetailsModel = InsuranceDetailsModel();
   final insuranceDataList = <InsuranceData>[].obs;
-  final pro = <String>[].obs;
-
   final isLoadMoreLeads = false.obs;
   final noRecordFound = true.obs;
   final pageNumber = 0.obs;
   RxBool isLoading = false.obs;
-
   RxString chosenStatusForFilter = "".obs;
+
   Future<dynamic> getLeadStatus(
       {String? userID, String? status, bool? value}) async {
     isLoading.value = true;

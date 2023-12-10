@@ -10,7 +10,6 @@ import 'package:insa_demo_abhay/model/insurance_model.dart';
 import 'package:insa_demo_abhay/view/history_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -88,63 +87,66 @@ class _HomeScreenState extends State<HomeScreen> {
       BuildContext context, List<StatusHistory> statusHistoryList) {
     showModalBottomSheet(
       showDragHandle: true,
+      constraints: BoxConstraints(maxHeight: Get.height / 1.5),
       isDismissible: true,
       isScrollControlled: true,
       enableDrag: true,
       context: context,
       builder: (BuildContext context) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: Text('Status History',
-                  style:
-                      TextStyle(fontWeight: FontWeight.w600, fontSize: 17.sp)),
-            ),
-            Padding(
-                padding: EdgeInsets.all(1.h),
-                child: ListView.builder(
-                    itemCount: statusHistoryList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, statusIndex) {
-                      return Padding(
-                        padding: EdgeInsets.all(0.8.h),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(6)),
-                              color: Colors.grey.withOpacity(0.5)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "Date & Time: ${dateFormat.format(DateTime.parse(statusHistoryList[statusIndex].date!))}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14.5.sp),
-                                ),
-                                Text(
-                                  "Status: ${statusHistoryList[statusIndex].currStatus ?? "No Current Status"}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14.5.sp),
-                                ),
-                              ],
-                            ),
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Text('Status History',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 17.sp)),
+              ),
+              ListView.builder(
+                  itemCount: statusHistoryList.length,
+                  shrinkWrap: true,
+                  // padding: EdgeInsets.zero,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, statusIndex) {
+                    return Padding(
+                      padding: EdgeInsets.all(0.8.h),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6)),
+                            color: Colors.grey.withOpacity(0.5)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Date & Time: ${dateFormat.format(DateTime.parse(statusHistoryList[statusIndex].date!))}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.5.sp),
+                              ),
+                              Text(
+                                "Status: ${statusHistoryList[statusIndex].currStatus ?? "No Current Status"}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.5.sp),
+                              ),
+                            ],
                           ),
                         ),
-                      );
-                    })),
-            SizedBox(
-              height: 2.h,
-            )
-          ],
+                      ),
+                    );
+                  }),
+              SizedBox(
+                height: 2.h,
+              )
+            ],
+          ),
         );
       },
     );
@@ -270,6 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Center(
                               child: GestureDetector(
                                 onTap: () {
+                                  Get.back();
                                   getAPI();
                                   homeScreenController
                                       .chosenStatusForFilter.value = "";
@@ -278,6 +281,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "All",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
+                                      color: homeScreenController
+                                                  .chosenStatusForFilter
+                                                  .value ==
+                                              ""
+                                          ? Color(0xFFFAAA52)
+                                          : Colors.black,
                                       fontSize: 18.sp),
                                 ),
                               ),
@@ -296,6 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Center(
                                             child: GestureDetector(
                                               onTap: () {
+                                                Get.back();
                                                 getAPI(
                                                     status: statusList[index]);
                                                 homeScreenController
@@ -306,6 +316,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 statusList[index],
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w400,
+                                                    color: homeScreenController
+                                                                .chosenStatusForFilter
+                                                                .value ==
+                                                            statusList[index]
+                                                        ? Color(0xFFFAAA52)
+                                                        : Colors.black,
                                                     fontSize: 18.sp),
                                               ),
                                             ),
