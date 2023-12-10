@@ -273,9 +273,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: GestureDetector(
                                 onTap: () {
                                   Get.back();
-                                  getAPI();
                                   homeScreenController
                                       .chosenStatusForFilter.value = "";
+                                  getAPI(
+                                      status: homeScreenController
+                                          .chosenStatusForFilter.value);
                                 },
                                 child: Text(
                                   "All",
@@ -378,7 +380,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.all(0.w),
                 icon: const Icon(Icons.refresh),
                 onPressed: () {
-                  getAPI();
+                  homeScreenController
+                      .chosenStatusForFilter.value = "";
+                  getAPI(
+                      status: homeScreenController
+                          .chosenStatusForFilter.value);
                 },
               ),
             ],
